@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>运费模板拓展表</title>
+		<#include "/header.html">
+</head>
+<body>
+<div id="rrapp" v-cloak>
+    <div v-show="showList">
+        <div class="grid-btn">
+			<#if shiro.hasPermission("transport:transporttemplateexpand:save")>
+            <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			</#if>
+			<#if shiro.hasPermission("transport:transporttemplateexpand:update")>
+            <a class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			</#if>
+			<#if shiro.hasPermission("transport:transporttemplateexpand:delete")>
+            <a class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</#if>
+        </div>
+        <table id="jqGrid"></table>
+        <div id="jqGridPager"></div>
+    </div>
+
+    <div v-show="!showList" class="panel panel-default">
+        <div class="panel-heading">{{title}}</div>
+        <form class="form-horizontal">
+														                    <div class="form-group">
+                        <div class="col-sm-2 control-label">运输表id</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.transportTemplateId" placeholder="运输表id"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">省id</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.provinceId" placeholder="省id"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">城市id</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.city" placeholder="城市id"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">区域id</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.area" placeholder="区域id"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">首件</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.firstNumber" placeholder="首件"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">首次价格</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.firstPrice" placeholder="首次价格"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">增加件数</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.addNumber" placeholder="增加件数"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">增加价格</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.addPrice" placeholder="增加价格"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">创建人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.createPerson" placeholder="创建人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">创建时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.createTime" placeholder="创建时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">更新人</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.updatePerson" placeholder="更新人"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">更新时间</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.updateTime" placeholder="更新时间"/>
+                        </div>
+                    </div>
+											                    <div class="form-group">
+                        <div class="col-sm-2 control-label">删除表标记，0不删除，1删除</div>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" v-model="transportTemplateExpand.delFlag" placeholder="删除表标记，0不删除，1删除"/>
+                        </div>
+                    </div>
+							            <div class="form-group">
+                <div class="col-sm-2 control-label"></div>
+                <input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+                &nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="${request.contextPath}/statics/js/modules/transport/transporttemplateexpand.js?_${.now?long}"></script>
+</body>
+</html>

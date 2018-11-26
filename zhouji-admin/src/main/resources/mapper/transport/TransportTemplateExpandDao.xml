@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.zhouji.modules.transport.dao.TransportTemplateExpandDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.zhouji.modules.transport.entity.TransportTemplateExpandEntity" id="transportTemplateExpandMap">
+        <result property="id" column="id"/>
+        <result property="transportTemplateId" column="transport_template_id"/>
+        <result property="provinceId" column="province_id"/>
+        <result property="city" column="city"/>
+        <result property="area" column="area"/>
+        <result property="firstNumber" column="first_number"/>
+        <result property="firstPrice" column="first_price"/>
+        <result property="addNumber" column="add_number"/>
+        <result property="addPrice" column="add_price"/>
+        <result property="createPerson" column="create_person"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updatePerson" column="update_person"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="delFlag" column="del_flag"/>
+    </resultMap>
+
+
+</mapper>
