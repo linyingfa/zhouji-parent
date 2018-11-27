@@ -47,7 +47,6 @@ public class SysDictController {
     @RequiresPermissions("sys:dict:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = sysDictService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 

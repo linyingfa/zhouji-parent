@@ -39,7 +39,6 @@ public class TestTestController {
     @RequiresPermissions("test:testtest:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = testTestService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -84,7 +83,6 @@ public class TestTestController {
     @RequiresPermissions("test:testtest:delete")
     public R delete(@RequestBody Integer[] ids){
         testTestService.deleteBatchIds(Arrays.asList(ids));
-
         return R.ok();
     }
 

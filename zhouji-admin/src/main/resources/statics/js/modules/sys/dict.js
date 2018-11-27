@@ -40,6 +40,7 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		// 添加这行代码就会出现搜索框
         q:{
             name: null
         },
