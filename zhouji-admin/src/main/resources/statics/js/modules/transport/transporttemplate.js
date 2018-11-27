@@ -3,19 +3,20 @@ $(function () {
         url: baseURL + 'transport/transporttemplate/list',
         datatype: "json",
         colModel: [			
-			{ label: 'transportTemplateId', name: 'transportTemplateId', index: 'transport_template_id', width: 50, key: true },
-			{ label: '计价方式，1重量，2件数', name: 'payType', index: 'pay_type', width: 80 }, 			
-			{ label: '运送方式 , 1快递，2平邮，3EMS 4货运', name: 'transportType', index: 'transport_type', width: 80 }, 			
+			{ label: '', name: 'transportTemplateId', index: 'transport_template_id', hidden:true,key: true },
+			{ label: '计价方式', name: 'payType', index: 'pay_type', width: 80 },
+			{ label: '运送方式', name: 'transportType', index: 'transport_type', width: 80 },
 			{ label: '说明', name: 'desc', index: 'desc', width: 80 }, 			
-			{ label: '创建人', name: 'createPerson', index: 'create_person', width: 80 }, 			
-			{ label: '创建时间', name: 'createTime', index: 'create_time', width: 80 }, 			
-			{ label: '更新人', name: 'updatePerson', index: 'update_person', width: 80 }, 			
-			{ label: '更新时间', name: 'updateTime', index: 'update_time', width: 80 }, 			
-			{ label: '删除标记，0不删除，1删除', name: 'delFlag', index: 'del_flag', width: 80 }, 			
+			// { label: '创建人', name: 'createPerson', index: 'create_person', width: 80 },
+			// { label: '创建时间', name: 'createTime', index: 'create_time', width: 80 },
+			// { label: '更新人', name: 'updatePerson', index: 'update_person', width: 80 },
+			// { label: '更新时间', name: 'updateTime', index: 'update_time', width: 80 },
+			// { label: '删除标记，0不删除，1删除', name: 'delFlag', index: 'del_flag', width: 80 },
 			{ label: '默认件数', name: 'defaultNumber', index: 'default_number', width: 80 }, 			
 			{ label: '默认运费价格', name: 'defaultPrice', index: 'default_price', width: 80 }, 			
 			{ label: '增加件数', name: 'defaultAddNumber', index: 'default_add_number', width: 80 }, 			
-			{ label: '增加的价格', name: 'defaultAddPrice', index: 'default_add_price', width: 80 }			
+			{ label: '增加的价格', name: 'defaultAddPrice', index: 'default_add_price', width: 80 }, 			
+			{ label: '运费模板名称', name: 'transportName', index: 'transport_name', width: 80 }
         ],
 		viewrecords: true,
         height: 385,
@@ -47,6 +48,10 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+        // 添加这行代码就会出现搜索框
+        q:{
+            name: null
+        },
 		showList: true,
 		title: null,
 		transportTemplate: {}
@@ -71,11 +76,12 @@ var vm = new Vue({
             vm.getInfo(transportTemplateId)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.transportTemplate.transportTemplateId == null ? "transport/transporttemplate/save" : "transport/transporttemplate/update";
+			var url = vm.transportTemplate.transportTemplateId == null ?
+				"transport/transporttemplate/save" :"transport/transporttemplate/update";
 			$.ajax({
 				type: "POST",
 			    url: baseURL + url,
-                contentType: "application/json",
+                contentType: "application/json;charset=utf-8",
 			    data: JSON.stringify(vm.transportTemplate),
 			    success: function(r){
 			    	if(r.code === 0){
@@ -93,13 +99,20 @@ var vm = new Vue({
 			if(transportTemplateIds == null){
 				return ;
 			}
-			
-			confirm('确定要删除选中的记录？', function(){
+
+			var ids = [];
+			for (var i = 0; i < transportTemplateIds.length; i++) {
+                var rowData = $("#jqGrid").jqGrid('getRowData',transportTemplateIds[i]);
+                // console.log(rowData)
+				ids[i] = rowData.transportTemplateId;
+			}
+
+            confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
 				    url: baseURL + "transport/transporttemplate/delete",
                     contentType: "application/json",
-				    data: JSON.stringify(transportTemplateIds),
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -117,12 +130,13 @@ var vm = new Vue({
                 vm.transportTemplate = r.transportTemplate;
             });
 		},
-		reload: function (event) {
-			vm.showList = true;
-			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+        reload: function (event) {
+            vm.showList = true;
+            var page = $("#jqGrid").jqGrid('getGridParam','page');
+            $("#jqGrid").jqGrid('setGridParam',{
+                postData:{'name': vm.q.name},
                 page:page
             }).trigger("reloadGrid");
-		}
+        }
 	}
 });

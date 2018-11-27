@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * 
  * @author linyingfa
  * @email 530810890@qq.com
- * @date 2018-11-26 22:43:44
+ * @date 2018-11-27 20:24:08
  */
 public interface TransportTemplateDao extends BaseMapper<TransportTemplateEntity> {
 	

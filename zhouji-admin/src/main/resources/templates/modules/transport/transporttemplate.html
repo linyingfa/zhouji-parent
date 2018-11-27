@@ -9,10 +9,11 @@
     <div v-show="showList">
         <div class="grid-btn">
 
-         <!--   <div class="form-group col-sm-2">
-                <input type="text" class="form-control" v-model="q.roleName" @keyup.enter="query" placeholder="角色名称">
+            <div class="form-group col-sm-2">
+                <input type="text" class="form-control" v-model="q.name"
+                       @keyup.enter="query" placeholder="运费模板名称">
             </div>
-            <a class="btn btn-default" @click="query">查询</a>-->
+            <a class="btn btn-default" @click="query">查询</a>
 
             <#if shiro.hasPermission("transport:transporttemplate:save")>
                 <a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
@@ -32,56 +33,65 @@
         <div class="panel-heading">{{title}}</div>
         <form class="form-horizontal">
             <div class="form-group">
-                <div class="col-sm-2 control-label">计价方式，1重量，2件数</div>
+                <div class="col-sm-2 control-label">计价方式</div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="transportTemplate.payType"
-                           placeholder="计价方式，1重量，2件数"/>
+                           placeholder="计价方式"/>
                 </div>
+                <!--<el-select v-model="value" placeholder="请选择">-->
+                    <!--<el-option-->
+                            <!--v-for="item in options"-->
+                            <!--:key="item.value"-->
+                            <!--:label="item.label"-->
+                            <!--:value="item.value">-->
+                    <!--</el-option>-->
+                <!--</el-select>-->
             </div>
             <div class="form-group">
-                <div class="col-sm-2 control-label">运送方式 , 1快递，2平邮，3EMS 4货运</div>
+                <div class="col-sm-2 control-label">运送方式</div>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="transportTemplate.transportType"
-                           placeholder="运送方式 , 1快递，2平邮，3EMS 4货运"/>
+                           placeholder="运送方式"/>
                 </div>
             </div>
             <div class="form-group">
                 <div class="col-sm-2 control-label">说明</div>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="transportTemplate.desc" placeholder="说明"/>
+                    <input type="text" class="form-control"
+                           v-model="transportTemplate.desc" placeholder="说明"/>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">创建人</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="transportTemplate.createPerson" placeholder="创建人"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">创建时间</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="transportTemplate.createTime" placeholder="创建时间"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">更新人</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="transportTemplate.updatePerson" placeholder="更新人"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">更新时间</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="transportTemplate.updateTime" placeholder="更新时间"/>
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-2 control-label">删除标记，0不删除，1删除</div>
-                <div class="col-sm-10">
-                    <input type="text" class="form-control" v-model="transportTemplate.delFlag"
-                           placeholder="删除标记，0不删除，1删除"/>
-                </div>
-            </div>
+            <!--<div class="form-group">-->
+                <!--<div class="col-sm-2 control-label">创建人</div>-->
+                <!--<div class="col-sm-10">-->
+                    <!--<input type="text" class="form-control" v-model="transportTemplate.createPerson" placeholder="创建人"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<div class="col-sm-2 control-label">创建时间</div>-->
+                <!--<div class="col-sm-10">-->
+                    <!--<input type="text" class="form-control" v-model="transportTemplate.createTime" placeholder="创建时间"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<div class="col-sm-2 control-label">更新人</div>-->
+                <!--<div class="col-sm-10">-->
+                    <!--<input type="text" class="form-control" v-model="transportTemplate.updatePerson" placeholder="更新人"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<div class="col-sm-2 control-label">更新时间</div>-->
+                <!--<div class="col-sm-10">-->
+                    <!--<input type="text" class="form-control" v-model="transportTemplate.updateTime" placeholder="更新时间"/>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="form-group">-->
+                <!--<div class="col-sm-2 control-label">删除标记，0不删除，1删除</div>-->
+                <!--<div class="col-sm-10">-->
+                    <!--<input type="text" class="form-control" v-model="transportTemplate.delFlag"-->
+                           <!--placeholder="删除标记，0不删除，1删除"/>-->
+                <!--</div>-->
+            <!--</div>-->
             <div class="form-group">
                 <div class="col-sm-2 control-label">默认件数</div>
                 <div class="col-sm-10">
@@ -108,6 +118,13 @@
                 <div class="col-sm-10">
                     <input type="text" class="form-control" v-model="transportTemplate.defaultAddPrice"
                            placeholder="增加的价格"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-2 control-label">运费模板名称</div>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" v-model="transportTemplate.transportName"
+                           placeholder="运费模板名称"/>
                 </div>
             </div>
             <div class="form-group">
