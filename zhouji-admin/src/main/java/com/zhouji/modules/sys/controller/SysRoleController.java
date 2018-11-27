@@ -69,7 +69,7 @@ public class SysRoleController extends AbstractController {
     }
 
     /**
-     * 角色信息
+     * 角色信息  点击修改的时候，先要查询出来对应的信息然后再调用进行修改
      */
     @RequestMapping("/info/{roleId}")
     @RequiresPermissions("sys:role:info")
@@ -92,9 +92,7 @@ public class SysRoleController extends AbstractController {
     @RequiresPermissions("sys:role:save")
     public R save(@RequestBody SysRoleEntity role) {
         ValidatorUtils.validateEntity(role);
-
         sysRoleService.save(role);
-
         return R.ok();
     }
 
@@ -106,9 +104,7 @@ public class SysRoleController extends AbstractController {
     @RequiresPermissions("sys:role:update")
     public R update(@RequestBody SysRoleEntity role) {
         ValidatorUtils.validateEntity(role);
-
         sysRoleService.update(role);
-
         return R.ok();
     }
 

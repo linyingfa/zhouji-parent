@@ -29,6 +29,8 @@ import com.zhouji.common.utils.R;
 @RestController
 @RequestMapping("transport/transporttemplateexpand")
 public class TransportTemplateExpandController {
+
+
     @Autowired
     private TransportTemplateExpandService transportTemplateExpandService;
 
@@ -39,7 +41,6 @@ public class TransportTemplateExpandController {
     @RequiresPermissions("transport:transporttemplateexpand:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = transportTemplateExpandService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -51,7 +52,6 @@ public class TransportTemplateExpandController {
     @RequiresPermissions("transport:transporttemplateexpand:info")
     public R info(@PathVariable("id") Integer id){
         TransportTemplateExpandEntity transportTemplateExpand = transportTemplateExpandService.selectById(id);
-
         return R.ok().put("transportTemplateExpand", transportTemplateExpand);
     }
 
@@ -62,7 +62,6 @@ public class TransportTemplateExpandController {
     @RequiresPermissions("transport:transporttemplateexpand:save")
     public R save(@RequestBody TransportTemplateExpandEntity transportTemplateExpand){
         transportTemplateExpandService.insert(transportTemplateExpand);
-
         return R.ok();
     }
 
@@ -74,7 +73,6 @@ public class TransportTemplateExpandController {
     public R update(@RequestBody TransportTemplateExpandEntity transportTemplateExpand){
         ValidatorUtils.validateEntity(transportTemplateExpand);
         transportTemplateExpandService.updateAllColumnById(transportTemplateExpand);//全部更新
-        
         return R.ok();
     }
 
@@ -85,7 +83,6 @@ public class TransportTemplateExpandController {
     @RequiresPermissions("transport:transporttemplateexpand:delete")
     public R delete(@RequestBody Integer[] ids){
         transportTemplateExpandService.deleteBatchIds(Arrays.asList(ids));
-
         return R.ok();
     }
 

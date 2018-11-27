@@ -18,10 +18,13 @@ public class TestTestServiceImpl extends ServiceImpl<TestTestDao, TestTestEntity
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
+
+        //public Page<T> selectPage(Page<T> page, Wrapper<T> wrapper)
         Page<TestTestEntity> page = this.selectPage(
                 new Query<TestTestEntity>(params).getPage(),
                 new EntityWrapper<TestTestEntity>()
         );
+
         return new PageUtils(page);
     }
 

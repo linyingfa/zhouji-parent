@@ -39,82 +39,98 @@ import java.util.Map;
 
 /**
  * 角色
- * 
+ *
  * @author chenshun
  * @email sunlightcs@gmail.com
  * @date 2016年9月18日 上午9:45:12
  */
 @Service("sysRoleService")
 public class SysRoleServiceImpl extends ServiceImpl<SysRoleDao, SysRoleEntity> implements SysRoleService {
-	@Autowired
-	private SysRoleMenuService sysRoleMenuService;
-	@Autowired
-	private SysRoleDeptService sysRoleDeptService;
-	@Autowired
-	private SysUserRoleService sysUserRoleService;
-	@Autowired
-	private SysDeptService sysDeptService;
 
-	@Override
-	@DataFilter(subDept = true, user = false)
-	public PageUtils queryPage(Map<String, Object> params) {
-		String roleName = (String)params.get("roleName");
-		Page<SysRoleEntity> page = this.selectPage(
-			new Query<SysRoleEntity>(params).getPage(),
-			new EntityWrapper<SysRoleEntity>()
-				.like(StringUtils.isNotBlank(roleName),"role_name", roleName)
-				.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String)params.get(Constant.SQL_FILTER))
-		);
-		for(SysRoleEntity sysRoleEntity : page.getRecords()){
-			SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysRoleEntity.getDeptId());
-			if(sysDeptEntity != null){
-				sysRoleEntity.setDeptName(sysDeptEntity.getName());
-			}
-		}
+    @Autowired
+    private SysRoleMenuService sysRoleMenuService;
+    @Autowired
+    private SysRoleDeptService sysRoleDeptService;
+    @Autowired
+    private SysUserRoleService sysUserRoleService;
+    @Autowired
+    private SysDeptService sysDeptService;
 
-		return new PageUtils(page);
-	}
+    /**
+     * 刷新和点击搜索查询，都是调用这个接口
+     *
+     * @param params
+     * @return
+     */
+    @Override
+    @DataFilter(subDept = true, user = false)
+    public PageUtils queryPage(Map<String, Object> params) {
+        String roleName = (String) params.get("roleName");
+        //TODO Query 是一个泛型的LinkedHashMap，构造方法一个Map，把map所有的参数put进去LinkedHashMap
+        // 分页查询 10 条姓名为‘张三’的用户记录
+		/*	List<User> userList = userMapper.selectPage(
+					new Page<User>(1, 10),
+					new EntityWrapper<User>().eq("name", "张三")
+			);*/
+        //TODO 里面定义好了一页多少个，第几页等等参数
+        Query<SysRoleEntity> query = new Query<SysRoleEntity>(params);
+        Page<SysRoleEntity> pageQuery = query.getPage();
+        //TODO 实体包装器，用于处理 sql 拼接，排序，实体参数查询等！
+        EntityWrapper<SysRoleEntity> entityWrapper = new EntityWrapper<SysRoleEntity>();
+        entityWrapper.like(StringUtils.isNotBlank(roleName), "role_name", roleName);
+        entityWrapper.addFilterIfNeed(params.get(Constant.SQL_FILTER) != null, (String) params.get(Constant.SQL_FILTER));
+        //根据page进行查询
+        Page<SysRoleEntity> page = this.selectPage(pageQuery, entityWrapper);
+        for (SysRoleEntity sysRoleEntity : page.getRecords()) {
+            SysDeptEntity sysDeptEntity = sysDeptService.selectById(sysRoleEntity.getDeptId());
+            if (sysDeptEntity != null) {
+                sysRoleEntity.setDeptName(sysDeptEntity.getName());
+            }
+        }
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void save(SysRoleEntity role) {
-		role.setCreateTime(new Date());
-		this.insert(role);
+        return new PageUtils(page);
+    }
 
-		//保存角色与菜单关系
-		sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void save(SysRoleEntity role) {
+        role.setCreateTime(new Date());
+        this.insert(role);
 
-		//保存角色与部门关系
-		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
-	}
+        //保存角色与菜单关系
+        sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void update(SysRoleEntity role) {
-		this.updateAllColumnById(role);
+        //保存角色与部门关系
+        sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
+    }
 
-		//更新角色与菜单关系
-		sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void update(SysRoleEntity role) {
+        this.updateAllColumnById(role);
 
-		//保存角色与部门关系
-		sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
-	}
+        //更新角色与菜单关系
+        sysRoleMenuService.saveOrUpdate(role.getRoleId(), role.getMenuIdList());
 
-	@Override
-	@Transactional(rollbackFor = Exception.class)
-	public void deleteBatch(Long[] roleIds) {
-		//删除角色
-		this.deleteBatchIds(Arrays.asList(roleIds));
+        //保存角色与部门关系
+        sysRoleDeptService.saveOrUpdate(role.getRoleId(), role.getDeptIdList());
+    }
 
-		//删除角色与菜单关联
-		sysRoleMenuService.deleteBatch(roleIds);
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void deleteBatch(Long[] roleIds) {
+        //删除角色
+        this.deleteBatchIds(Arrays.asList(roleIds));
 
-		//删除角色与部门关联
-		sysRoleDeptService.deleteBatch(roleIds);
+        //删除角色与菜单关联
+        sysRoleMenuService.deleteBatch(roleIds);
 
-		//删除角色与用户关联
-		sysUserRoleService.deleteBatch(roleIds);
-	}
+        //删除角色与部门关联
+        sysRoleDeptService.deleteBatch(roleIds);
+
+        //删除角色与用户关联
+        sysUserRoleService.deleteBatch(roleIds);
+    }
 
 
 }

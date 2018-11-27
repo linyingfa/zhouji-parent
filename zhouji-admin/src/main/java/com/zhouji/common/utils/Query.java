@@ -30,7 +30,9 @@ import java.util.Map;
  * @since 2.0.0 2017-03-14
  */
 public class Query<T> extends LinkedHashMap<String, Object> {
+
 	private static final long serialVersionUID = 1L;
+
     /**
      * mybatis-plus分页参数
      */

@@ -14,7 +14,8 @@ import com.zhouji.modules.transport.service.TransportTemplateExpandService;
 
 
 @Service("transportTemplateExpandService")
-public class TransportTemplateExpandServiceImpl extends ServiceImpl<TransportTemplateExpandDao, TransportTemplateExpandEntity> implements TransportTemplateExpandService {
+public class TransportTemplateExpandServiceImpl extends ServiceImpl<TransportTemplateExpandDao, TransportTemplateExpandEntity>
+        implements TransportTemplateExpandService {
 
     @Override
     public PageUtils queryPage(Map<String, Object> params) {

@@ -49,6 +49,7 @@ public class TransportTemplateController {
     @RequestMapping("/info/{transportTemplateId}")
     @RequiresPermissions("transport:transporttemplate:info")
     public R info(@PathVariable("transportTemplateId") Integer transportTemplateId){
+        //通过运费模板id来查找对应的信息，。这个应该是点击修改的是否调用
         TransportTemplateEntity transportTemplate = transportTemplateService.selectById(transportTemplateId);
         return R.ok().put("transportTemplate", transportTemplate);
     }
@@ -59,6 +60,7 @@ public class TransportTemplateController {
     @RequestMapping("/save")
     @RequiresPermissions("transport:transporttemplate:save")
     public R save(@RequestBody TransportTemplateEntity transportTemplate){
+        //增加
         transportTemplateService.insert(transportTemplate);
         return R.ok();
     }
