@@ -59,7 +59,6 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:list")
 	public R list(@RequestParam Map<String, Object> params){
 		PageUtils page = sysUserService.queryPage(params);
-
 		return R.ok().put("page", page);
 	}
 	
@@ -70,7 +69,8 @@ public class SysUserController extends AbstractController {
 	public R info(){
 		return R.ok().put("user", getUser());
 	}
-	
+
+
 	/**
 	 * 修改登录用户密码
 	 */
@@ -78,18 +78,15 @@ public class SysUserController extends AbstractController {
 	@RequestMapping("/password")
 	public R password(String password, String newPassword){
 		Assert.isBlank(newPassword, "新密码不为能空");
-
 		//原密码
 		password = ShiroUtils.sha256(password, getUser().getSalt());
 		//新密码
 		newPassword = ShiroUtils.sha256(newPassword, getUser().getSalt());
-				
 		//更新密码
 		boolean flag = sysUserService.updatePassword(getUserId(), password, newPassword);
 		if(!flag){
 			return R.error("原密码不正确");
 		}
-		
 		return R.ok();
 	}
 	
@@ -100,11 +97,9 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:info")
 	public R info(@PathVariable("userId") Long userId){
 		SysUserEntity user = sysUserService.selectById(userId);
-		
 		//获取用户所属的角色列表
 		List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
 		user.setRoleIdList(roleIdList);
-		
 		return R.ok().put("user", user);
 	}
 	
@@ -116,9 +111,7 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:save")
 	public R save(@RequestBody SysUserEntity user){
 		ValidatorUtils.validateEntity(user, AddGroup.class);
-		
 		sysUserService.save(user);
-		
 		return R.ok();
 	}
 	
@@ -130,9 +123,7 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:update")
 	public R update(@RequestBody SysUserEntity user){
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
-
 		sysUserService.update(user);
-		
 		return R.ok();
 	}
 	
@@ -146,13 +137,10 @@ public class SysUserController extends AbstractController {
 		if(ArrayUtils.contains(userIds, 1L)){
 			return R.error("系统管理员不能删除");
 		}
-		
 		if(ArrayUtils.contains(userIds, getUserId())){
 			return R.error("当前用户不能删除");
 		}
-
 		sysUserService.deleteBatchIds(Arrays.asList(userIds));
-		
 		return R.ok();
 	}
 }

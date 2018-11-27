@@ -39,7 +39,6 @@ public class TransportTemplateController {
     @RequiresPermissions("transport:transporttemplate:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = transportTemplateService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -51,7 +50,6 @@ public class TransportTemplateController {
     @RequiresPermissions("transport:transporttemplate:info")
     public R info(@PathVariable("transportTemplateId") Integer transportTemplateId){
         TransportTemplateEntity transportTemplate = transportTemplateService.selectById(transportTemplateId);
-
         return R.ok().put("transportTemplate", transportTemplate);
     }
 
@@ -62,7 +60,6 @@ public class TransportTemplateController {
     @RequiresPermissions("transport:transporttemplate:save")
     public R save(@RequestBody TransportTemplateEntity transportTemplate){
         transportTemplateService.insert(transportTemplate);
-
         return R.ok();
     }
 
@@ -74,7 +71,6 @@ public class TransportTemplateController {
     public R update(@RequestBody TransportTemplateEntity transportTemplate){
         ValidatorUtils.validateEntity(transportTemplate);
         transportTemplateService.updateAllColumnById(transportTemplate);//全部更新
-        
         return R.ok();
     }
 
@@ -85,7 +81,6 @@ public class TransportTemplateController {
     @RequiresPermissions("transport:transporttemplate:delete")
     public R delete(@RequestBody Integer[] transportTemplateIds){
         transportTemplateService.deleteBatchIds(Arrays.asList(transportTemplateIds));
-
         return R.ok();
     }
 
