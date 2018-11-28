@@ -1,8 +1,7 @@
 package com.zhouji.modules.transport.controller;
 
-import java.util.Arrays;
-import java.util.Map;
 
+import java.util.Map;
 import com.zhouji.common.request.TransportTemplateSaveRequest;
 import com.zhouji.common.validator.ValidatorUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -54,9 +53,28 @@ public class TransportTemplateController {
     }
 
     /**
+     * http://localhost:8081/transport/transporttemplate/seleteinfo?transportTemplateId=15
+     * 根据ID查询
+     *
+     * @param transportTemplateId
+     * @return
+     */
+    @RequestMapping("/seleteinfo")
+    @RequiresPermissions("transport:transporttemplate:info")
+    public R seleteinfo(@RequestParam int transportTemplateId) {
+        TransportTemplateSaveRequest transportTemplate = transportTemplateService.selectOne(transportTemplateId);
+        if (transportTemplate == null) {
+            return R.error("该模板信息不存");
+        }
+        return R.ok().put("transportTemplate", transportTemplate);
+    }
+
+
+    /**
      * 保存
      */
- /*   @RequestMapping("/save")
+
+    /*   @RequestMapping("/save")
     @RequiresPermissions("transport:transporttemplate:save")
     public R save(@RequestBody TransportTemplateEntity transportTemplate){
         transportTemplateService.insert(transportTemplate);
@@ -74,21 +92,24 @@ public class TransportTemplateController {
      */
     @RequestMapping("/update")
     @RequiresPermissions("transport:transporttemplate:update")
-    public R update(@RequestBody TransportTemplateEntity transportTemplate) {
+    public R update(@RequestBody TransportTemplateSaveRequest transportTemplate) {
         ValidatorUtils.validateEntity(transportTemplate);
-        transportTemplateService.updateAllColumnById(transportTemplate);//全部更新
-
-        return R.ok();
+//        transportTemplateService.updateAllColumnById(transportTemplate);
+        return transportTemplateService.updateAllColumn(transportTemplate);
     }
 
     /**
-     * 删除
+     * 删除  不能同时映射多个同名的方法
      */
+//    @RequestMapping("/delete")
+//    @RequiresPermissions("transport:transporttemplate:delete")
+//    public R delete(@RequestBody Integer[] transportTemplateIds) {
+//        transportTemplateService.deleteBatchIds(Arrays.asList(transportTemplateIds));
+//        return R.ok();
+//    }
     @RequestMapping("/delete")
     @RequiresPermissions("transport:transporttemplate:delete")
-    public R delete(@RequestBody Integer[] transportTemplateIds) {
-        transportTemplateService.deleteBatchIds(Arrays.asList(transportTemplateIds));
-        return R.ok();
+    public R delete(@RequestParam int transportTemplateIds) {
+        return transportTemplateService.delete(transportTemplateIds);
     }
-
 }

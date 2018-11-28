@@ -80,9 +80,6 @@ public class TransportTemplateEntity implements Serializable {
      */
     private String transportName;
 
-
-
-
     /**
      * 设置：运费模板id
      */

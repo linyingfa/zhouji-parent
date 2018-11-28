@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.List;
 
 /**
  * Created by xiaolin on 2018/11/27.
@@ -13,7 +14,8 @@ import java.math.BigDecimal;
 @Data
 public class TransportTemplateSaveRequest implements Serializable {
 
-
+    //运输表id
+    private Integer transportTemplateId;
     //计价方式，1重量，2件数
     private Integer payType;
     //运送方式 , 1快递，2平邮，3EMS 4货运
@@ -30,8 +32,8 @@ public class TransportTemplateSaveRequest implements Serializable {
     private BigDecimal defaultAddPrice;
     //模版名称
     private String transportName;
-
-    private TemplateExpand templateExpand;
+    //具体运送地址列表
+    private List<TemplateExpand> templateExpand;
 
 
 }

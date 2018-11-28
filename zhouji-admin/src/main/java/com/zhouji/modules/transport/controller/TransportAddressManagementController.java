@@ -51,18 +51,31 @@ public class TransportAddressManagementController {
     @RequiresPermissions("transport:transportaddressmanagement:info")
     public R info(@PathVariable("senderId") Integer senderId){
         TransportAddressManagementEntity transportAddressManagement = transportAddressManagementService.selectById(senderId);
-
         return R.ok().put("transportAddressManagement", transportAddressManagement);
     }
 
+/*    {
+
+           "sender" :"lyf",
+            "area": 3,
+            "city": 2,
+            "provinceId": 1,
+            "address":"广东阳江",
+            "postcode":"529943",
+            "phone":"15112004467",
+            "mobile":"15112004467",
+            "isDefault":1
+
+    }*/
+
     /**
      * 保存
+     * @RequestBody
      */
     @RequestMapping("/save")
     @RequiresPermissions("transport:transportaddressmanagement:save")
     public R save(@RequestBody TransportAddressManagementEntity transportAddressManagement){
         transportAddressManagementService.insert(transportAddressManagement);
-
         return R.ok();
     }
 
@@ -74,7 +87,6 @@ public class TransportAddressManagementController {
     public R update(@RequestBody TransportAddressManagementEntity transportAddressManagement){
         ValidatorUtils.validateEntity(transportAddressManagement);
         transportAddressManagementService.updateAllColumnById(transportAddressManagement);//全部更新
-        
         return R.ok();
     }
 
@@ -85,7 +97,6 @@ public class TransportAddressManagementController {
     @RequiresPermissions("transport:transportaddressmanagement:delete")
     public R delete(@RequestBody Integer[] senderIds){
         transportAddressManagementService.deleteBatchIds(Arrays.asList(senderIds));
-
         return R.ok();
     }
 

@@ -21,5 +21,10 @@ public interface TransportTemplateService extends IService<TransportTemplateEnti
 
     R insert(TransportTemplateSaveRequest request);
 
+    R delete(int transportTemplateIds);
+
+    TransportTemplateSaveRequest selectOne(int transportTemplateIds);
+
+    R updateAllColumn(TransportTemplateSaveRequest request);
 }
 

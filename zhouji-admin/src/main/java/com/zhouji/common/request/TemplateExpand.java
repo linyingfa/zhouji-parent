@@ -1,5 +1,6 @@
 package com.zhouji.common.request;
 
+import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -11,6 +12,8 @@ import java.math.BigDecimal;
 @Data
 public class TemplateExpand implements Serializable {
 
+    //主键
+    private Integer id;
     //运输表id
     private Integer transportTemplateId;
     //省id

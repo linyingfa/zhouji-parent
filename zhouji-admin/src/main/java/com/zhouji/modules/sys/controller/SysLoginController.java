@@ -73,10 +73,10 @@ public class SysLoginController {
 		if(!captcha.equalsIgnoreCase(kaptcha)){
 			return R.error("验证码不正确");
 		}
-		
 		try{
 			Subject subject = ShiroUtils.getSubject();
 			UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+			//
 			subject.login(token);
 		}catch (UnknownAccountException e) {
 			return R.error(e.getMessage());
