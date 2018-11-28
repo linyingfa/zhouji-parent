@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 530
-Source Server Version : 50711
+Source Server         : localhost_3306
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : zjds
 
 Target Server Type    : MYSQL
-Target Server Version : 50711
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-27 23:35:12
+Date: 2018-11-28 17:16:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,17 +35,15 @@ CREATE TABLE `transport_template` (
   `default_add_price` decimal(10,0) DEFAULT NULL COMMENT '增加的价格',
   `transport_name` varchar(255) CHARACTER SET utf8 DEFAULT NULL COMMENT '模版名称',
   PRIMARY KEY (`transport_template_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1 COMMENT='运费模板表';
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1 COMMENT='运费模板表';
 
 -- ----------------------------
 -- Records of transport_template
 -- ----------------------------
-INSERT INTO `transport_template` VALUES ('8', '11', '11', '11', null, null, null, null, '0', '1', '1', '1', '1', '1');
 INSERT INTO `transport_template` VALUES ('9', '2', '2', '2', null, null, null, null, '0', '2', '2', '2', '2', '2');
 INSERT INTO `transport_template` VALUES ('10', '1', '1', '首次', null, null, null, null, '0', '1', '12', '2', '23', '便宜货');
 INSERT INTO `transport_template` VALUES ('11', '1', '1', '首次', null, null, null, null, '0', '1', '12', '2', '23', '便宜货');
 INSERT INTO `transport_template` VALUES ('12', '1', '1', '首次', null, null, null, null, '0', '1', '12', '2', '23', '便宜货');
 INSERT INTO `transport_template` VALUES ('13', '1', '1', '首次', null, null, null, null, '0', '1', '12', '2', '23', '便宜货');
 INSERT INTO `transport_template` VALUES ('14', '1', '1', '首次', null, null, null, null, '0', '1', '12', '2', '23', '便宜货');
-INSERT INTO `transport_template` VALUES ('15', '1', '1', '首次', null, null, null, null, '0', '1', '12', '2', '23', '便宜货');
-INSERT INTO `transport_template` VALUES ('16', '1', '1', '首次', null, null, null, null, '0', '1', '12', '2', '23', '便宜货');
+INSERT INTO `transport_template` VALUES ('15', '1', '1', '首次11', null, null, null, null, '0', '1', '12', '2', '23', '便宜货111');

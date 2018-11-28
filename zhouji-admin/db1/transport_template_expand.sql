@@ -1,16 +1,16 @@
 /*
 Navicat MySQL Data Transfer
 
-Source Server         : 530
-Source Server Version : 50711
+Source Server         : localhost_3306
+Source Server Version : 50505
 Source Host           : localhost:3306
 Source Database       : zjds
 
 Target Server Type    : MYSQL
-Target Server Version : 50711
+Target Server Version : 50505
 File Encoding         : 65001
 
-Date: 2018-11-27 23:35:20
+Date: 2018-11-28 17:16:49
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -35,15 +35,12 @@ CREATE TABLE `transport_template_expand` (
   `update_time` datetime DEFAULT NULL COMMENT '更新时间',
   `del_flag` tinyint(4) DEFAULT NULL COMMENT '删除表标记，0不删除，1删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1 COMMENT='运费模板拓展表';
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1 COMMENT='运费模板拓展表';
 
 -- ----------------------------
 -- Records of transport_template_expand
 -- ----------------------------
-INSERT INTO `transport_template_expand` VALUES ('1', null, '1', '2', '3', '1', '12', '3', '3', null, null, null, null, null);
-INSERT INTO `transport_template_expand` VALUES ('2', null, '1', '2', '3', '1', '12', '3', '3', null, null, null, null, null);
-INSERT INTO `transport_template_expand` VALUES ('3', null, '1', '2', '3', '1', '12', '3', '3', null, null, null, null, null);
-INSERT INTO `transport_template_expand` VALUES ('4', null, '1', '2', '3', '1', '12', '3', '3', null, null, null, null, null);
-INSERT INTO `transport_template_expand` VALUES ('5', null, '1', '2', '3', '1', '12', '3', '3', null, null, null, null, null);
-INSERT INTO `transport_template_expand` VALUES ('6', null, '1', '2', '3', '1', '12', '3', '3', null, null, null, null, null);
-INSERT INTO `transport_template_expand` VALUES ('7', '16', '1', '2', '3', '1', '12', '3', '3', null, null, null, null, null);
+INSERT INTO `transport_template_expand` VALUES ('7', '15', '1', '2', '3', '1', '2', '3', '3', null, null, null, null, null);
+INSERT INTO `transport_template_expand` VALUES ('8', '15', '1', '2', '3', '1', '2', '3', '3', null, null, null, null, null);
+INSERT INTO `transport_template_expand` VALUES ('11', '15', '1', '22', '33', '11', '12', '33', '33', null, null, null, null, null);
+INSERT INTO `transport_template_expand` VALUES ('12', '15', '1', '22', '33', '11', '12', '33', '33', null, null, null, null, null);
