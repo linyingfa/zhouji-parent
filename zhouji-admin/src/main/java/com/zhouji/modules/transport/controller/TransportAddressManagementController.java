@@ -18,7 +18,6 @@ import com.zhouji.common.utils.PageUtils;
 import com.zhouji.common.utils.R;
 
 
-
 /**
  * 地址管理表
  *
@@ -34,28 +33,30 @@ public class TransportAddressManagementController {
 
     /**
      * 列表
+     * http://localhost:8081/transport/transportaddressmanagement/list
      */
     @RequestMapping("/list")
     @RequiresPermissions("transport:transportaddressmanagement:list")
-    public R list(@RequestParam Map<String, Object> params){
+    public R list(@RequestParam Map<String, Object> params) {
         PageUtils page = transportAddressManagementService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
 
     /**
      * 信息
+     * http://localhost:8081/transport/transportaddressmanagement/info/1
+     * rest 请求，参数直接拼接在尾部
      */
     @RequestMapping("/info/{senderId}")
     @RequiresPermissions("transport:transportaddressmanagement:info")
-    public R info(@PathVariable("senderId") Integer senderId){
-        TransportAddressManagementEntity transportAddressManagement = transportAddressManagementService.selectById(senderId);
+    public R info(@PathVariable("senderId") Integer senderId) {
+        TransportAddressManagementEntity transportAddressManagement =
+                transportAddressManagementService.selectById(senderId);
         return R.ok().put("transportAddressManagement", transportAddressManagement);
     }
 
 /*    {
-
            "sender" :"lyf",
             "area": 3,
             "city": 2,
@@ -65,28 +66,29 @@ public class TransportAddressManagementController {
             "phone":"15112004467",
             "mobile":"15112004467",
             "isDefault":1
+    }
 
-    }*/
-
+    */
     /**
      * 保存
-     * @RequestBody
+     *
+     * @RequestBody http://localhost:8081/transport/transportaddressmanagement/save
      */
     @RequestMapping("/save")
     @RequiresPermissions("transport:transportaddressmanagement:save")
-    public R save(@RequestBody TransportAddressManagementEntity transportAddressManagement){
+    public R save(@RequestBody TransportAddressManagementEntity transportAddressManagement) {
         transportAddressManagementService.insert(transportAddressManagement);
         return R.ok();
     }
 
     /**
-     * 修改
+     * 修改   http://localhost:8081/transport/transportaddressmanagement/update
      */
     @RequestMapping("/update")
     @RequiresPermissions("transport:transportaddressmanagement:update")
-    public R update(@RequestBody TransportAddressManagementEntity transportAddressManagement){
+    public R update(@RequestBody TransportAddressManagementEntity transportAddressManagement) {
         ValidatorUtils.validateEntity(transportAddressManagement);
-        transportAddressManagementService.updateAllColumnById(transportAddressManagement);//全部更新
+        transportAddressManagementService.updateById(transportAddressManagement);//全部更新
         return R.ok();
     }
 
@@ -95,7 +97,7 @@ public class TransportAddressManagementController {
      */
     @RequestMapping("/delete")
     @RequiresPermissions("transport:transportaddressmanagement:delete")
-    public R delete(@RequestBody Integer[] senderIds){
+    public R delete(@RequestBody Integer[] senderIds) {
         transportAddressManagementService.deleteBatchIds(Arrays.asList(senderIds));
         return R.ok();
     }

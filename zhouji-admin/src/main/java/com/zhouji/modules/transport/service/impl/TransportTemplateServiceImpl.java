@@ -25,6 +25,7 @@ import com.zhouji.common.utils.Query;
 import com.zhouji.modules.transport.dao.TransportTemplateDao;
 import com.zhouji.modules.transport.entity.TransportTemplateEntity;
 import com.zhouji.modules.transport.service.TransportTemplateService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("transportTemplateService")
@@ -98,8 +99,17 @@ public class TransportTemplateServiceImpl extends
      * @param request
      * @return
      */
+
+    /**
+     * 1.校验，类型，值，长度，是否正确，，列如：默认模板字段，0默认，2不默认，，这个字段不能有其他，否则参数错误
+     * 2.删除，需要区分表删除还是逻辑删除，，逻辑删除：设置一个标记，代表此数据删除，
+     * 3.是否需要加事务处理，可以用Sprign 事务管理，@Transactional
+     *
+     */
     @Override
+    @Transactional
     public R insert(TransportTemplateSaveRequest request) {
+
         TransportTemplateEntity entity = new TransportTemplateEntity();
         BeanUtils.copyProperties(request, entity);
         this.insert(entity);//
@@ -176,6 +186,13 @@ public class TransportTemplateServiceImpl extends
         return null;
     }
 
+    /**
+     * 1.更新界面操作中：
+     *        是否有添加了数据 ，有更新并插入
+     *         是否有删除了数据 ，有更新并删除，
+     *
+     *     【1234】 【2345】  新旧数据进行对比，
+     */
     @Override
     public R updateAllColumn(TransportTemplateSaveRequest request) {
         if (request == null) {

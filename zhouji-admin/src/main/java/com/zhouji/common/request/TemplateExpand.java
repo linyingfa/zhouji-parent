@@ -1,6 +1,5 @@
 package com.zhouji.common.request;
 
-import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.Data;
 
 import java.io.Serializable;

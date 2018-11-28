@@ -39,7 +39,6 @@ public class TransportEmsController {
     @RequiresPermissions("transport:transportems:list")
     public R list(@RequestParam Map<String, Object> params){
         PageUtils page = transportEmsService.queryPage(params);
-
         return R.ok().put("page", page);
     }
 
@@ -51,7 +50,6 @@ public class TransportEmsController {
     @RequiresPermissions("transport:transportems:info")
     public R info(@PathVariable("emsId") Integer emsId){
         TransportEmsEntity transportEms = transportEmsService.selectById(emsId);
-
         return R.ok().put("transportEms", transportEms);
     }
 
@@ -62,7 +60,6 @@ public class TransportEmsController {
     @RequiresPermissions("transport:transportems:save")
     public R save(@RequestBody TransportEmsEntity transportEms){
         transportEmsService.insert(transportEms);
-
         return R.ok();
     }
 
@@ -85,7 +82,6 @@ public class TransportEmsController {
     @RequiresPermissions("transport:transportems:delete")
     public R delete(@RequestBody Integer[] emsIds){
         transportEmsService.deleteBatchIds(Arrays.asList(emsIds));
-
         return R.ok();
     }
 

@@ -1,8 +1,11 @@
 package com.zhouji.modules.transport.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.zhouji.common.request.TemplateExpand;
 import com.zhouji.common.utils.PageUtils;
+import com.zhouji.common.utils.R;
 import com.zhouji.modules.transport.entity.TransportTemplateExpandEntity;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Map;
 
@@ -16,5 +19,9 @@ import java.util.Map;
 public interface TransportTemplateExpandService extends IService<TransportTemplateExpandEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+   R delete(int id);
+
+   R update(TemplateExpand templateExpand);
 }
 
