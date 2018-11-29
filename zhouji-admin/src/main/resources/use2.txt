@@ -49,6 +49,18 @@
 
 
 
+            //如果通过商品名称进行查询出所有属性值步骤如下：
+
+            1.通过商品id，去商品品类关联表中，查出该商品下的品类，再
+            SELECT category_id from goods_category WHERE goods_id =1;
+
+            通过该品类id，去品类属性关联表中查出该属性
+            （TODO 如果按照目前这样的表设计，一个品类下面可能有2个属性，
+            SELECT property_id from base_categort_property WHERE category_id =2;
+
+            通过属性id，查出所有属性值
+            select * from base_property where property_id =1;
+
 
 
 
