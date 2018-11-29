@@ -3,29 +3,50 @@
 3.设置按钮需要配置权限标识
 
 4.基础资料表设计
-        品类表  (品类id，)  1         饮料   可乐   橙汁
-        （如果只有单个品类，可以直接从属性-属性值表获取,多个逻辑错误
-          列如： 可乐只有白色，和红色，混合）
 
-        属性表（属性id）   2           容量, 颜色，产地
-        属性值表（属性id）      4       （白、红、黑）
-        品类 --属性 关系表  (品类id，属性id) 3    【可乐：容量】，【可乐id ，颜色id】
+         INSERT INTO base_category (category_code, category_name,category_sort,category_url,category_parent_id,category_child_id)
+         VALUES ('A01-01','橙汁',1,'http://',1,0);
+         品类表  (品类id，)  1         饮料   可乐   橙汁
+        （如果只有单个品类，可以直接从属性-属性值表获取,多个逻辑错误 列如： 可乐只有白色，和红色，混合）  //0K
+
+         INSERT INTO base_property (property_code, property_name,property_show_type) VALUES ('A01','毫升',1);
+         INSERT INTO base_property (property_code, property_name,property_show_type) VALUES ('A03','品牌',1);
+         属性表（属性id）   2           容量, 颜色，产地        //0K
+
+
+         INSERT INTO base_property_values (property_values_code, property_values_name,property_values_url,property_id) VALUES ('c1','红色','http://',3);
+         INSERT INTO base_property_values (property_values_code, property_values_name,property_values_url,property_id) VALUES ('c2','白色','http://',3);
+         INSERT INTO base_property_values (property_values_code, property_values_name,property_values_url,property_id) VALUES ('c3','黑色','http://',3);
+         属性值表（属性id）      4       （白、红、黑）          //0K
+
+
+         INSERT INTO base_categort_property (category_id, property_id) VALUES (2,2);
+         select * from base_property where property_id in (select property_id from base_categort_property where category_id = 2);
+         品类 --属性 关系表  (品类id，属性id) 3    【可乐：容量】，【可乐id ，颜色id】
+
+
+         INSERT INTO base_property_propertyvalues (property_id, propertyvalues_id) VALUES (1,1);
+         INSERT INTO base_property_propertyvalues (property_id, propertyvalues_id) VALUES (1,2);
+         INSERT INTO base_property_propertyvalues (property_id, propertyvalues_id) VALUES (1,3);
+         select * from base_property_values where property_id in (select property_id from base_property_propertyvalues where property_id = 1);
          属性值 --属性 关系表  (属性id，属性值id)  5  【颜色：白】，【颜色 ，红】，【颜色 ，黑】
          饮料
          容量
          （100， 200， 300， 400， 500 ml）
          可乐  100， 200
          橙汁 300， 2000
-       品类id
-       getAll属性值(品类id) {
+
+        品类id
+        getAll属性值(品类id) {
         查出所有属性，（品类，属性关系表）
         通过某个属性id，（属性值 --属性 关系表 查出所有属性id）
         通过属性值id，（属性值表查出该所有属性值）
        }
+
        职类表
        热门城市表
        退款原因表
-    发布商品信息 ：
+       发布商品信息 ：
                 规格表
                 商品表
                 商品-职类表（关联表）

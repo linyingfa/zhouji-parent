@@ -1,0 +1,72 @@
+1.品类管理页面：
+    1.1左侧默认空列表，右侧添加，(品类管理)
+
+         1.1.1添加品类：
+                INSERT INTO base_category (category_code, category_name,category_sort,category_url,category_parent_id,category_child_id)
+                VALUES ('A01-01','橙汁',1,'http://',1,0);   （树状图）
+         1.1.2 整理树状图数据结构，刷新左侧UI
+
+     1.2   属性列表默认没有数据（查询、增加）（属性管理）
+
+             1.2.1增加 :
+                    INSERT INTO base_property (property_code, property_name,property_show_type) VALUES ('A01','毫升',1);
+                    INSERT INTO base_property (property_code, property_name,property_show_type) VALUES ('A03','含糖量',1);
+                    INSERT INTO base_property (property_code, property_name,property_show_type) VALUES ('A03','颜色',1);
+                    INSERT INTO base_property (property_code, property_name,property_show_type) VALUES ('A03','品牌',1);
+
+            1.2.2 查询属性列表：selete * from  base_property ;
+
+      1.3  （属性值管理）
+
+        1.3.1 左侧显示属性列表 ：查询所有属性
+
+        1.3.2：右侧添加属性值：
+                        INSERT INTO base_property_values (property_values_code, property_values_name,property_values_url,property_id)
+                        VALUES ('c1','红色','http://',3);
+                        INSERT INTO base_property_values (property_values_code, property_values_name,property_values_url,property_id)
+                        VALUES ('c2','白色','http://',3);
+                        INSERT INTO base_property_values (property_values_code, property_values_name,property_values_url,property_id)
+                        VALUES ('c3','黑色','http://',3);
+
+        1.3.3 添加每一条都后都需要更新属性值属性关联表中：
+                   INSERT INTO base_property_propertyvalues (property_id, propertyvalues_id) VALUES (1,1);
+                   INSERT INTO base_property_propertyvalues (property_id, propertyvalues_id) VALUES (1,2);
+                   INSERT INTO base_property_propertyvalues (property_id, propertyvalues_id) VALUES (1,3);
+
+         1.3.3 根据属性查出该属性对应的所有属性值进行更新UI：
+                  select * from base_property_values where property_id in (select property_id from base_property_propertyvalues where property_id = 1);
+
+        1.4（品类属性管理）
+            1.4.1 ： 查出所有品类，构建树状图数据结构，
+            1.4.2 ：选中某个品类，进行添加属性
+                    添加列表界面：查出所有属性
+                    进行勾选或者全选，
+                    保存到品类属性关联表中：
+                    INSERT INTO base_categort_property (category_id, property_id) VALUES (2,2);
+                    属性列表界面刷新数据，通过属性表和品类属性关联表进行子查询，获取该品类下面的属性 ：
+                    select * from base_property where property_id in (select property_id from base_categort_property where category_id = 2);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
